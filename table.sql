@@ -14,7 +14,7 @@ Password varchar(200)
 );
 
 CREATE TABLE Property(
-Id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+Id varchar(200) PRIMARY KEY,
 Name varchar(200),
 Location varchar(200),
 Type varchar(10),
@@ -27,7 +27,7 @@ FOREIGN KEY(Owner_id) REFERENCES Owner(Id)
 
 
 CREATE TABLE PropertyCost(
-Property_id int,
+Property_id varchar(200),
 Gas int,
 Water int,
 Electricity int,
