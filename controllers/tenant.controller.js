@@ -1,5 +1,6 @@
 const execute = require('../db/connection');
 const {TenantQueries} = require('../queries/tenant')
+const {PropertyQueries,RentPorpertyQueries,PropertyCostQueries} = require('../queries/properties');
 
 async function getTenantsController(req,res){
     try {
@@ -100,9 +101,43 @@ async function getTenantById(req,res){
     
     
 } 
+
+async function rentpropertyController(req,res){
+    try {
+        const Tenant_id = req.params.id;
+        const {Property_id} = req.body;
+        const property = await execute(PropertyQueries.GetPropertyById,[Property_id]);
+        if(property[0].Current_occupant<property[0].Max_occupant){
+            curr_occupant = property[0].Current_occupant+1;
+            updated = await execute(PropertyQueries.UpdateCurrentOccupant,[curr_occupant,Property_id]);
+            if(updated.affectedRows!=0){
+                const propertyCost = await execute(PropertyCostQueries.GetPropertyCostById,[Property_id]);
+                const rentProperty = await execute(RentPorpertyQueries.AddRentProperty,[Tenant_id,Property_id,0,propertyCost[0].Rent/curr_occupant]);
+                if(rentProperty.affectedRows!=0){
+                    res.status(200).json({
+                        message:'Property Rented successful'
+                    })
+                }
+                else{
+                    res.status(404).json({
+                        message:'Property Rented failed'
+                    })
+                }
+            }
+
+        }
+    } catch (error) {
+        res.status(500).json({
+            message:'Eror adding',
+            error:error
+        })
+    }
+}
+
 module.exports = {
     getTenantsController,
     registerTenantController,
     loginTenantController,
-    getTenantById
+    getTenantById,
+    rentpropertyController
 }

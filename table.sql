@@ -35,4 +35,14 @@ Rent int,
 FOREIGN KEY(Property_id) REFERENCES Property(Id)
 );
 
+Create Table RentProperty(
+    Tenant_id int,
+    Property_id varchar(200),
+    utilityamtdue int,
+    Rent int,
+    FOREIGN KEY(Property_id) REFERENCES Property(Id),
+    FOREIGN KEY(Tenant_id) REFERENCES Tenant(Id)
+
+);
+
 

@@ -1,7 +1,7 @@
 const execute = require('../db/connection');
 const {OwnerQueries} = require('../queries/owner');
 const {v4 : uuidv4} = require('uuid');
-const {PropertyQueries, PropertyCostQueries} = require ('../queries/properties');
+const {PropertyQueries, PropertyCostQueries, RentPorpertyQueries} = require ('../queries/properties');
 
 async function getOwnerController(req,res){
     try {
@@ -110,6 +110,16 @@ async function updatePropertyCost(req,res){
             })
         }
         else{
+            const property = await execute(PropertyQueries.GetPropertyById,[Id]);
+            console.log(property)
+            if(property[0].Current_occupant !=0 ){
+                const utilityamtdue = (Gas+Water+Electricity)/property[0].Current_occupant;
+                const rent = Rent/property[0].Current_occupant;
+                const rentproperty = await execute(RentPorpertyQueries.UpdateRentProperty,[utilityamtdue,rent,Id])
+                console.log(rentproperty)
+
+            }
+            
             res.status(200).json({
                 message:"Cost Updated",
                 cost: cost
