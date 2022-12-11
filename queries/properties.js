@@ -1,6 +1,7 @@
 exports.PropertyQueries = {
     GetProperties:'SELECT * FROM Property',
     GetPropertyById:'SELECT * FROM Property WHERE Id = ?',
+    GetAllAvailProperties: 'SELECT * from Property WHERE Current_occupant < Max_occupant',
     AddProperty:`
         INSERT INTO Property(Id,Name,Location,Type,Description,Max_occupant,Current_occupant,Owner_id)
         VALUES(?,?,?,?,?,?,?,?)

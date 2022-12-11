@@ -1,5 +1,5 @@
 const execute = require('../db/connection');
-const {PropertyQueries} = require('../queries/property');
+const {PropertyQueries} = require('../queries/properties');
 
 async function getPropertyController(req,res){
     try {
