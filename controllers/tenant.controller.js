@@ -112,7 +112,7 @@ async function rentpropertyController(req,res){
             updated = await execute(PropertyQueries.UpdateCurrentOccupant,[curr_occupant,Property_id]);
             if(updated.affectedRows!=0){
                 const propertyCost = await execute(PropertyCostQueries.GetPropertyCostById,[Property_id]);
-                const rentProperty = await execute(RentPorpertyQueries.AddRentProperty,[Tenant_id,Property_id,0,propertyCost[0].Rent/curr_occupant]);
+                const rentProperty = await execute(RentPorpertyQueries.AddRentProperty,[Tenant_id,Property_id,0,property[0].Rent/curr_occupant]);
                 if(rentProperty.affectedRows!=0){
                     res.status(200).json({
                         message:'Property Rented successful'

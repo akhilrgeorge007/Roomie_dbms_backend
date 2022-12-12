@@ -21,6 +21,7 @@ Type varchar(10),
 Description varchar(300),
 Max_occupant int,
 Current_occupant int,
+Rent int,
 Owner_id int, 
 FOREIGN KEY(Owner_id) REFERENCES Owner(Id)
 );
@@ -31,7 +32,6 @@ Property_id varchar(200),
 Gas int,
 Water int,
 Electricity int,
-Rent int,
 FOREIGN KEY(Property_id) REFERENCES Property(Id)
 );
 

@@ -81,8 +81,8 @@ async function addProperty(req,res){
         const Owner_id = req.params.id;
         const Current_occupant = 0;
         const Id = uuidv4();
-        let result1 = await execute(PropertyQueries.AddProperty,[Id,Name,Location,Type,Description,Max_occupant,Current_occupant,Owner_id]);
-        let result2 = await execute(PropertyCostQueries.AddPropertyCost,[Id,0,0,0,Rent]);
+        let result1 = await execute(PropertyQueries.AddProperty,[Id,Name,Location,Type,Description,Max_occupant,Current_occupant,Rent,Owner_id]);
+        let result2 = await execute(PropertyCostQueries.AddPropertyCost,[Id,0,0,0]);
         res.status(200).json({
             message:'Property Added',
             result1: result1,
@@ -102,8 +102,8 @@ async function addProperty(req,res){
 async function updatePropertyCost(req,res){
     try {
         const Id = req.params.id;
-        const {Gas, Water, Electricity,Rent} = req.body;
-        const cost = await execute(PropertyCostQueries.UpdatePropertyCost,[Gas,Water,Electricity,Rent,Id]);
+        const {Gas, Water, Electricity} = req.body;
+        const cost = await execute(PropertyCostQueries.UpdatePropertyCost,[Gas,Water,Electricity,Id]);
         if(cost.affectedRows==0){
             res.status(404).json({
                 message:"Property not found",
@@ -114,7 +114,7 @@ async function updatePropertyCost(req,res){
             console.log(property)
             if(property[0].Current_occupant !=0 ){
                 const utilityamtdue = (Gas+Water+Electricity)/property[0].Current_occupant;
-                const rent = Rent/property[0].Current_occupant;
+                const rent = property[0].Rent/property[0].Current_occupant;
                 const rentproperty = await execute(RentPorpertyQueries.UpdateRentProperty,[utilityamtdue,rent,Id])
                 console.log(rentproperty)
 

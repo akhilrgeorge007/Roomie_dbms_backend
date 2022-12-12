@@ -1,7 +1,7 @@
 const execute = require('../db/connection');
 const {PropertyQueries, PropertyCostQueries} = require('../queries/properties');
 
-async function getPropertyController(req,res){
+async function getavailPropertyController(req,res){
     try {
         const property = await execute(PropertyQueries.GetAllAvailProperties,[]);
         console.log(property);
@@ -41,6 +41,6 @@ async function getPropertyCostController(req,res){
 }
 
 module.exports = {
-    getPropertyController,
+    getavailPropertyController,
     getPropertyCostController
 }
