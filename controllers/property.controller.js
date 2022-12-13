@@ -1,6 +1,29 @@
 const execute = require('../db/connection');
 const {PropertyQueries, PropertyCostQueries} = require('../queries/properties');
 
+
+async function getPropertyByIdController(req,res){
+    try {
+        const Id = req.params.id;
+        const property = await execute(PropertyQueries.GetPropertyById,[Id]);
+        if (property.length!=0){
+            res.status(200).json({
+                property:property
+            })
+        }
+        else{
+            res.status(500).json({
+                message:'property not found '
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            message:"Fetching error",
+            error:error
+        })
+    }
+}
+
 async function getavailPropertyController(req,res){
     try {
         const property = await execute(PropertyQueries.GetAllAvailProperties,[]);
@@ -42,5 +65,6 @@ async function getPropertyCostController(req,res){
 
 module.exports = {
     getavailPropertyController,
-    getPropertyCostController
+    getPropertyCostController,
+    getPropertyByIdController
 }

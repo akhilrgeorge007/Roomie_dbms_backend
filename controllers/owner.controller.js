@@ -74,6 +74,34 @@ async function loginOwnerController(req,res){
 
 }
 
+async function getOwnerByIdController(req,res){
+    try{
+        const Id = req.params.id;
+        const user = await execute(OwnerQueries.GetOwnerById,[Id]);
+        if(user.length!=0)
+        {
+            res.status(200).json({
+                message:"user found",
+                user: user
+            })
+        }
+        else
+        {
+            res.status(500).json({
+                message:"user not found!"
+            })
+
+        }
+    }
+    catch(err)
+    {
+        res.status(500).json({
+            message:"fetching error"
+        })
+    }
+    
+    
+} 
 
 async function addProperty(req,res){
     try {
@@ -141,5 +169,6 @@ module.exports = {
     registerOwnerController,
     loginOwnerController,
     addProperty,
-    updatePropertyCost
+    updatePropertyCost,
+    getOwnerByIdController
 }
