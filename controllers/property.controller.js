@@ -63,8 +63,34 @@ async function getPropertyCostController(req,res){
     }
 }
 
+async function getPropertyByOwnerIdController(req,res){
+    try{
+        const Id=req.params.id
+        const OwnerProperty = await execute(PropertyQueries.GetPropertyByOwnerID,[Id])
+        if(OwnerProperty.length != 0)
+        {
+            res.status(200).json({
+            message:"OwnerProperty found",
+            OwnerProperty:OwnerProperty});
+        }
+        else{
+            res.status(404).json({
+                message:"PropertyId not found"
+            });
+        }
+
+    }catch (error) {
+        res.status(500).json({
+            message:"Fetching Error",
+            error:error
+        })        
+    }
+
+}
+
 module.exports = {
     getavailPropertyController,
     getPropertyCostController,
-    getPropertyByIdController
+    getPropertyByIdController,
+    getPropertyByOwnerIdController
 }

@@ -1,6 +1,7 @@
 exports.PropertyQueries = {
     GetProperties:'SELECT * FROM Property',
     GetPropertyById:'SELECT * FROM Property WHERE Id = ?',
+    GetPropertyByOwnerID: 'SELECT * FROM Property WHERE Owner_id = ?',
     GetAllAvailProperties: 'SELECT * from Property WHERE Current_occupant < Max_occupant',
     UpdateCurrentOccupant:'UPDATE Property SET Current_occupant = ? WHERE Id = ?',
     AddProperty:`
