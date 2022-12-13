@@ -134,10 +134,33 @@ async function rentpropertyController(req,res){
     }
 }
 
+async function getrentpropertyByidContorller(req,res){
+    try {
+        const id = req.params.id
+        const property = await execute(RentPorpertyQueries.GetRentPropertyByTenantId,[id]);
+        if(property.length!=0){
+            res.status(200).json({
+                property:property
+            })
+        }
+        else{
+            res.status(404).json({
+                message:'Propertyfailed'
+            })
+        }
+
+    } catch (error) {
+        res.status(500).json({
+            message:"fetching error"
+        })
+    }
+}
+
 module.exports = {
     getTenantsController,
     registerTenantController,
     loginTenantController,
     getTenantById,
-    rentpropertyController
+    rentpropertyController,
+    getrentpropertyByidContorller
 }

@@ -24,6 +24,7 @@ exports.RentPorpertyQueries = {
         INSERT INTO RentProperty(Tenant_id,Property_id,utilityamtdue,Rent)
         VALUES(?,?,?,?)
     `,
+    GetRentPropertyByTenantId:'SELECT * FROM RentProperty WHERE Tenant_id = ?',
     UpdateRentProperty:`
         UPDATE RentProperty SET utilityamtdue = ?, Rent = ? WHERE Property_id = ?
     `
