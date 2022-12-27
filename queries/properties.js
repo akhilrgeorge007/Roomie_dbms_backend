@@ -1,6 +1,6 @@
 exports.PropertyQueries = {
     GetProperties:'SELECT * FROM Property',
-    GetPropertyById:'SELECT * FROM Property WHERE Id = ?',
+    GetPropertyById:'SELECT * FROM Property WHERE Id in (?)',
     GetPropertyByOwnerID: 'SELECT * FROM Property WHERE Owner_id = ?',
     GetAllAvailProperties: 'SELECT * from Property WHERE Current_occupant < Max_occupant',
     UpdateCurrentOccupant:'UPDATE Property SET Current_occupant = ? WHERE Id = ?',
@@ -25,7 +25,7 @@ exports.RentPorpertyQueries = {
         INSERT INTO RentProperty(Tenant_id,Property_id,utilityamtdue,Rent)
         VALUES(?,?,?,?)
     `,
-    GetRentPropertyByTenantId:'SELECT * FROM RentProperty WHERE Tenant_id = ?',
+    GetRentPropertyByTenantId:'SELECT * FROM Property,RentProperty WHERE Property.Id=RentProperty.Property_id AND Tenant_id = ?',
     UpdateRentProperty:`
         UPDATE RentProperty SET utilityamtdue = ?, Rent = ? WHERE Property_id = ?
     `

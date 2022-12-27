@@ -130,7 +130,7 @@ async function addProperty(req,res){
 async function updatePropertyCost(req,res){
     try {
         const Id = req.params.id;
-        const {Gas, Water, Electricity} = req.body;
+        var {Gas, Water, Electricity} = req.body;
         const cost = await execute(PropertyCostQueries.UpdatePropertyCost,[Gas,Water,Electricity,Id]);
         if(cost.affectedRows==0){
             res.status(404).json({
@@ -141,7 +141,7 @@ async function updatePropertyCost(req,res){
             const property = await execute(PropertyQueries.GetPropertyById,[Id]);
             console.log(property)
             if(property[0].Current_occupant !=0 ){
-                const utilityamtdue = (Gas+Water+Electricity)/property[0].Current_occupant;
+                const utilityamtdue = Number(Number(Gas)+Number(Water)+Number(Electricity))/property[0].Current_occupant;
                 const rent = property[0].Rent/property[0].Current_occupant;
                 const rentproperty = await execute(RentPorpertyQueries.UpdateRentProperty,[utilityamtdue,rent,Id])
                 console.log(rentproperty)
