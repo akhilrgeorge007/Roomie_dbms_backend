@@ -164,11 +164,27 @@ async function updatePropertyCost(req,res){
     }
 }
 
+async function deletePropertyController (req,res){
+    try {
+        const Id = req.params.id;
+        const deleteRentProperty = await execute(RentPorpertyQueries.DeleteRentProperty,[Id]);
+        const deletePropertyCost = await execute(PropertyCostQueries.DeletePropertyCost,[Id]);
+        const deleteProperty = await execute(PropertyQueries.DeleteProperty,[Id]);
+
+    } catch (error) {
+        res.status(500).json({
+            message:"Error deleting",
+            error:error
+        })
+    }
+}
+
 module.exports = {
     getOwnerController,
     registerOwnerController,
     loginOwnerController,
     addProperty,
     updatePropertyCost,
-    getOwnerByIdController
+    getOwnerByIdController,
+    deletePropertyController
 }

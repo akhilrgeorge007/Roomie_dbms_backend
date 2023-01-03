@@ -7,7 +7,8 @@ exports.PropertyQueries = {
     AddProperty:`
         INSERT INTO Property(Id,Name,Location,Type,Description,Max_occupant,Current_occupant,Rent,Owner_id)
         VALUES(?,?,?,?,?,?,?,?,?)
-    `
+    `,
+    DeleteProperty:'DELETE FROM property WHERE Id = ?'
 }
 
 exports.PropertyCostQueries = {
@@ -17,7 +18,8 @@ exports.PropertyCostQueries = {
         INSERT INTO PropertyCost(Property_id,Gas,Water,Electricity)
         VALUES(?,?,?,?)
     `,
-    UpdatePropertyCost:'UPDATE PropertyCost SET Gas = ?, Water = ?, Electricity = ? WHERE Property_id = ?'
+    UpdatePropertyCost:'UPDATE PropertyCost SET Gas = ?, Water = ?, Electricity = ? WHERE Property_id = ?',
+    DeletePropertyCost:'DELETE FROM propertycost WHERE Property_id = ?'
 }
 
 exports.RentPorpertyQueries = {
@@ -28,5 +30,6 @@ exports.RentPorpertyQueries = {
     GetRentPropertyByTenantId:'SELECT * FROM Property,RentProperty WHERE Property.Id=RentProperty.Property_id AND Tenant_id = ?',
     UpdateRentProperty:`
         UPDATE RentProperty SET utilityamtdue = ?, Rent = ? WHERE Property_id = ?
-    `
+    `,
+    DeleteRentProperty:'DELETE FROM rentproperty WHERE Property_id = ?'
 }
